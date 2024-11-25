@@ -23,7 +23,7 @@ function nextSequence(){
     //it gives flashy animated on the random chosen colour
     $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
 
-    var audio = new Audio(randomChosenColour + ".mp3");
+    var audio = new Audio("sounds/" + randomChosenColour + ".mp3");
     audio.play();
 
 //excuting playsound function
@@ -51,7 +51,7 @@ $(".btn").click(function handler(){
 
 function playSound(name){
 
-    var audio = new Audio( name + ".mp3");
+    var audio = new Audio("sounds/" + name + ".mp3");
     audio.play();
 
 }
@@ -64,6 +64,14 @@ function animatePress(currentColor){
        
 }, 100);
 }
+
+$("#play").one('click',function(){
+    
+    nextSequence();
+    
+
+  
+});
 
 //it detect when a keyboard key has been pressed, when that happens for the first time, call nextSequence()
 $(document).one('keypress',function(){
@@ -83,9 +91,9 @@ function checkAnswer(currentLevel){
         }, 1000)
     }
     else{
-        $("h1").text("Game Over, Press Any Key to Restart");
+        $("h1").text("Game Over, Press Any Key or Play button to Restart");
         restart()
-        var audio = new Audio("wrong.mp3");
+        var audio = new Audio("sounds/wrong.mp3");
         audio.play();
         $("body").addClass('game-over');
         setTimeout(function() {
@@ -98,6 +106,15 @@ function checkAnswer(currentLevel){
 
 function restart(){
     level1=0;
+
+    $("#play").one('click',function(){
+    
+        nextSequence();
+        $("h1").text("Level " +level1);
+    
+      
+    });
+
     $(document).one('keypress',function(){
     
         nextSequence();
