@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <h1 id="level-title">Press A Key to Start</h1>
+  <h1 id="level-title">Press A Key or play button to Start</h1>
   <div class="container">
     <div lass="row">
 
@@ -34,6 +34,25 @@
     </div>
 
   </div>
+
+   <button id="play"
+  style="
+    display: inline-block; 
+    padding: 15px 30px; 
+    margin-top: 25px;
+    font-family: 'Press Start 2P', cursive; 
+    font-size: 1.5rem; 
+    color: #FEF2BF; 
+    background-color: #011F3F; 
+    border: 3px solid #FEF2BF; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    transition: background-color 0.3s, transform 0.3s;" 
+  onmouseover="this.style.backgroundColor='#FEF2BF'; this.style.color='#011F3F';" 
+  onmouseout="this.style.backgroundColor='#011F3F'; this.style.color='#FEF2BF';">
+  Play
+</button>
 
   <script
   src="https://code.jquery.com/jquery-3.7.1.js"
