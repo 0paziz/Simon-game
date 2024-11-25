@@ -1,53 +1,116 @@
 body {
   text-align: center;
   background-color: #011F3F;
+  margin: 0;
+  padding: 0;
 }
 
 #level-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 3rem;
-  margin:  5%;
+  font-size: 2rem;
+  margin: 5%;
   color: #FEF2BF;
 }
 
 .container {
   display: block;
-  width: 50%;
+  width: 80%;
   margin: auto;
-
 }
 
+/* Buttons */
 .btn {
-  margin: 25px;
+  margin: 15px;
   display: inline-block;
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   border: 10px solid black;
   border-radius: 20%;
 }
 
+/* Game Over Effect */
 .game-over {
   background-color: red;
   opacity: 0.8;
 }
 
+/* Colors */
 .red {
   background-color: red;
 }
-
 .green {
   background-color: green;
 }
-
 .blue {
   background-color: blue;
 }
-
 .yellow {
   background-color: yellow;
 }
 
+/* Button Press Effect */
 .pressed {
   box-shadow: 0 0 20px white;
   background-color: grey;
+}
+@media (max-width:1250px){
+
+  #level-title {
+  font-size: 25px;
+  margin: 10%;
+}
+
+.btn {
+  height: 200px;
+  width: 200px;
+  margin: 10px;
+}
+
+.container {
+  display: block;
+  width: 100%;
+  margin-top: 100px;
+}
+
+}
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  #level-title {
+    font-size: 25px;
+    margin-top: 100px;
+  }
+
+  .btn {
+    height: 200px;
+  width: 200px;
+  margin: 15px;
+ 
+  }
+
+  .container {
+    display: block;
+    width: 100%;
+    margin-top: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  #level-title {
+    font-size: 20px;
+    margin: 15%;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .btn {
+    height: 80px;
+    width: 80px;
+    margin: 8px;
+  }
+
+  .container {
+    display: block;
+    width: 100%;
+    margin-top: 150px;
+  }
 }
