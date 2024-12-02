@@ -1,131 +1,89 @@
 
-var buttonColours=["red", "blue", "green", "yellow"];
-var gamePattern=[];
-var userClickedPattern=[];
+var buttonColours = ["red", "blue", "green", "yellow"];
 
-var level1=0;
+var gamePattern = [];
+var userClickedPattern = [];
 
-//a function for creating next sequence and its called this function when a user does a keypress.
-function nextSequence(){
+var started = false;
+var level = 0;
 
-    //updating the game score
-    level1++;
-
-    $("h1").text("Level " +level1);
-
-//generates a rondom number
-    var randomNumber= Math.floor(Math.random()*4);
-
-    var randomChosenColour= buttonColours[randomNumber];
-
-    gamePattern.push(randomChosenColour);
-    
-    //it gives flashy animated on the random chosen colour
-    $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
-
-    var audio = new Audio(randomChosenColour + ".mp3");
-    audio.play();
-
-//excuting playsound function
-    playSound(randomChosenColour);
-
-   
-
-    
-
-}
-
-
-$(".btn").click(function handler(){
-
-    var userChosenColour=$(this).attr('id');
-    
-   
-    userClickedPattern.push(userChosenColour);
-    playSound(userChosenColour);
-    animatePress(userChosenColour);
-    var lastAnswer=userClickedPattern[userClickedPattern.length -1];
-    checkAnswer(lastAnswer);
-})
-
-
-function playSound(name){
-
-    var audio = new Audio(name + ".mp3");
-    audio.play();
-
-}
-
-//adding a "pressed" class whic gives a flashy style
-function animatePress(currentColor){
-    $("."+currentColor).addClass('pressed');
-    setTimeout(function(){
-        $("."+currentColor).removeClass('pressed');
-       
-}, 100);
-}
-
-$("#play").one('click',function(){
-    
+$(document).keypress(function() {
+  if (!started) {
+    $("#level-title").text("Level " + level);
     nextSequence();
-    
-
-  
-});
-
-//it detect when a keyboard key has been pressed, when that happens for the first time, call nextSequence()
-$(document).one('keypress',function(){
-    
-    nextSequence();
-    //The h1 title starts out saying "Press A Key to Start", when the game has started, change this to say "Level 0".
-
-  
+    started = true;
+  }
 });
 
 
-function checkAnswer(currentLevel){
+$("#play").click(function() {
+  if (!started) {
+    $("#level-title").text("Level " + level);
+    nextSequence();
+    started = true;
+  }
+});
 
-    if(currentLevel===gamePattern[gamePattern.length -1]){
-        setTimeout(function() {
-            nextSequence();
-        }, 1000)
-    }
-    else{
-        $("h1").text("Game Over, Press Any Key or Play button to Restart");
-        restart()
-        var audio = new Audio("wrong.mp3");
-        audio.play();
-        $("body").addClass('game-over');
-        setTimeout(function() {
-            $("body").removeClass('game-over');
-        }, 200)
-    }
 
+$(".btn").click(function() {
+
+  var userChosenColour = $(this).attr("id");
+  userClickedPattern.push(userChosenColour);
+
+  playSound(userChosenColour);
+  animatePress(userChosenColour);
+
+  checkAnswer(userClickedPattern.length-1);
+});
+
+function checkAnswer(currentLevel) {
+
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+      if (userClickedPattern.length === gamePattern.length){
+        setTimeout(function () {
+          nextSequence();
+        }, 1000);
+      }
+    } else {
+      playSound("wrong");
+      $("body").addClass("game-over");
+      $("#level-title").text("Game Over, Press Play button to Restart");
+
+      setTimeout(function () {
+        $("body").removeClass("game-over");
+      }, 200);
+
+      startOver();
+    }
 }
 
 
-function restart(){
-    level1=0;
+function nextSequence() {
+  userClickedPattern = [];
+  level++;
+  $("#level-title").text("Level " + level);
+  var randomNumber = Math.floor(Math.random() * 4);
+  var randomChosenColour = buttonColours[randomNumber];
+  gamePattern.push(randomChosenColour);
 
-    $("#play").one('click',function(){
-    
-        nextSequence();
-        $("h1").text("Level " +level1);
-    
-      
-    });
-
-    $(document).one('keypress',function(){
-    
-        nextSequence();
-        //The h1 title starts out saying "Press A Key to Start", when the game has started, change this to say "Level 0".
-        $("h1").text("Level " +level1);
-    
-      
-    });
+  $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
+  playSound(randomChosenColour);
 }
 
+function animatePress(currentColor) {
+  $("#" + currentColor).addClass("pressed");
+  setTimeout(function () {
+    $("#" + currentColor).removeClass("pressed");
+  }, 100);
+}
 
+function playSound(name) {
+  var audio = new Audio(name + ".mp3");
+  audio.play();
+}
 
-
-
+function startOver() {
+  level = 0;
+  gamePattern = [];
+  started = false;
+}
